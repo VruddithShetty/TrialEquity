@@ -1,0 +1,1 @@
+["age_mean", "age_std", "age_range", "age_skewness", "gender_male", "gender_female", "gender_balance", "ethnicity_white", "ethnicity_black", "ethnicity_asian", "ethnicity_diversity", "sample_size_norm", "sample_size_log", "eligibility_score", "eligibility_variance", "demographic_parity", "disparate_impact", "equality_opportunity"]

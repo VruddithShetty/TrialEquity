@@ -1,0 +1,197 @@
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+
+  - &SponsorOrg
+    Name: SponsorOrg
+    ID: SponsorMSP
+    MSPDir: crypto-config/peerOrganizations/sponsor.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('SponsorMSP.admin', 'SponsorMSP.peer', 'SponsorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('SponsorMSP.admin', 'SponsorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('SponsorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.sponsor.example.com
+        Port: 7051
+
+  - &InvestigatorOrg
+    Name: InvestigatorOrg
+    ID: InvestigatorMSP
+    MSPDir: crypto-config/peerOrganizations/investigator.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('InvestigatorMSP.admin', 'InvestigatorMSP.peer', 'InvestigatorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('InvestigatorMSP.admin', 'InvestigatorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('InvestigatorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.investigator.example.com
+        Port: 7051
+
+  - &RegulatorOrg
+    Name: RegulatorOrg
+    ID: RegulatorMSP
+    MSPDir: crypto-config/peerOrganizations/regulator.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin', 'RegulatorMSP.peer', 'RegulatorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin', 'RegulatorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('RegulatorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.regulator.example.com
+        Port: 7051
+
+  - &AuditorOrg
+    Name: AuditorOrg
+    ID: AuditorMSP
+    MSPDir: crypto-config/peerOrganizations/auditor.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('AuditorMSP.admin', 'AuditorMSP.peer', 'AuditorMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('AuditorMSP.admin', 'AuditorMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('AuditorMSP.admin')"
+    AnchorPeers:
+      - Host: peer0.auditor.example.com
+        Port: 7051
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V2_0: true
+  Orderer: &OrdererCapabilities
+    V2_0: true
+  Application: &ApplicationCapabilities
+    V2_0: true
+
+Application: &ApplicationDefaults
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft
+  EtcdRaft:
+    Consenters:
+      - Host: orderer0.example.com
+        Port: 7050
+        ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
+      - Host: orderer1.example.com
+        Port: 7050
+        ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+      - Host: orderer2.example.com
+        Port: 7050
+        ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+        ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 10 MB
+    PreferredMaxBytes: 2 MB
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Profiles:
+  ClinicalTrialsChannel:
+    <<: *ChannelDefaults
+    Consortium: ClinicalTrialsConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *SponsorOrg
+        - *InvestigatorOrg
+        - *RegulatorOrg
+        - *AuditorOrg
+      Capabilities:
+        <<: *ApplicationCapabilities
+
+  ClinicalTrialsOrdererGenesis:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+      Capabilities:
+        <<: *OrdererCapabilities
+    Consortiums:
+      ClinicalTrialsConsortium:
+        Organizations:
+          - *SponsorOrg
+          - *InvestigatorOrg
+          - *RegulatorOrg
+          - *AuditorOrg
+
