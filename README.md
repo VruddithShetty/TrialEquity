@@ -150,10 +150,3 @@ Sample trials are available in the `trials/` directory:
 - **Biased Trials** (50) - Expected to be flagged
 - **Mixed Trials** (25) - Borderline cases for review
 
-## 📞 Support
-
-For detailed architecture, data flow, and technical documentation, see `ARCHITECTURE.md`.
-
-## 📄 License
-
-[Your License Here]
