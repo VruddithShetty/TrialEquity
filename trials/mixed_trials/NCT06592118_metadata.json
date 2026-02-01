@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06592118",
+  "title": "Clinical and Surgical Outcomes of Thyroid Carcinoma in Children and Adolescents",
+  "condition": "Pediatric and Adolescent Differentiated Thyroid Carcinoma",
+  "participant_count": 3068,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 8.975554106910039,
+    "std": 4.057186845438544,
+    "min": 1,
+    "max": 18
+  },
+  "gender_distribution": {
+    "male": 0.45789691621908285,
+    "female": 0.5421030837809171
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 3068,
+  "eligibility_score": 0.8242998184233943
+}

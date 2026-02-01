@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06074497",
+  "title": "This is an Open Label, Two-part, Multicenter, Phase I Trial to Investigate the Safety, Tolerability, and PK of KGX101 Monotherapy and Combination Therapy with Envafolimab in Patients with Advanced or Metastatic Solid Tumors.",
+  "condition": "Advanced or Metastatic Solid Tumors",
+  "participant_count": 54,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 48.148148148148145,
+    "std": 15.54956458458213,
+    "min": 20,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5274560249914587,
+    "female": 0.4725439750085413
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 54,
+  "eligibility_score": 0.8202443205200868
+}

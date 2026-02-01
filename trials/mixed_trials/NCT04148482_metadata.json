@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT04148482",
+  "title": "PREMIER: PREvention of Metabolic Illness Through prEcision nutRition",
+  "condition": "Obesity",
+  "participant_count": 22,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 43.27272727272727,
+    "std": 8.553372034476997,
+    "min": 28,
+    "max": 60
+  },
+  "gender_distribution": {
+    "male": 0.47397514163053506,
+    "female": 0.5260248583694649
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 22,
+  "eligibility_score": 0.8023965845645079
+}

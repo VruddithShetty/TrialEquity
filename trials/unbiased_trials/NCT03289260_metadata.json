@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT03289260",
+  "title": "Adjuvant Anal Imiquimod Therapy in Anal HPV-lesions: AdAM-trial",
+  "condition": "Anogenital Human Papillomavirus Infection",
+  "participant_count": 200,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 49.415,
+    "std": 15.065444336803566,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.47969709573515706,
+    "female": 0.5203029042648429
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 200,
+  "eligibility_score": 0.8375560664556594
+}

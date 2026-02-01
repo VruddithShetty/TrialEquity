@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT03017690",
+  "title": "Lanreotide and Octreotide Long Acting Release (LAR) for Patients With Advanced Gastroenteropancreatic Neuroendocrine Tumors (GEP-NETs)",
+  "condition": "Gastroenteropancreatic Neuroendocrine Tumor",
+  "participant_count": 22,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 49.04545454545455,
+    "std": 15.382356227733226,
+    "min": 18,
+    "max": 73
+  },
+  "gender_distribution": {
+    "male": 0.5199193197981377,
+    "female": 0.48008068020186234
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 22,
+  "eligibility_score": 0.8317472549708719
+}

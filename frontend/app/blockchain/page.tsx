@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { CheckCircle, XCircle, Link2, Shield, Clock, PenTool, TrendingUp, Key, Upload, ArrowRight, List, Activity, BarChart3, ChevronDown, ChevronUp } from 'lucide-react'
+import { CheckCircle, XCircle, Link2, Shield, Clock, PenTool, TrendingUp, Key, Upload, ArrowRight, List, Activity, BarChart3, ChevronDown, ChevronUp, File } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { apiClient, BlockchainWriteResponse, BlockchainVerifyResponse } from '@/lib/api'
 import { useToast } from '@/hooks/use-toast'
+import { formatDate } from '@/lib/date-utils'
 import {
   ResponsiveContainer,
   AreaChart,
@@ -44,55 +45,40 @@ export default function BlockchainPage() {
   const [loadingComparison, setLoadingComparison] = useState(false)
   const { toast } = useToast()
 
-  // Auto-login and auto-fetch trial ID
+  // Check authentication on mount
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
+    if (!token || !user) {
+      router.push('/login')
+      return
+    }
+    
+    try {
+      const userData = JSON.parse(user)
+      // Blockchain page is available to all authenticated users
+      // Verify token is still valid
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      const exp = payload.exp * 1000
+      if (exp < Date.now()) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        router.push('/login')
+        return
+      }
+      
+      setAuthenticated(true)
+    } catch (e) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      router.push('/login')
+    }
+  }, [router])
+
+  // Initialize page data
   useEffect(() => {
     const initializePage = async () => {
-      // First, ensure we're authenticated
-      let token = localStorage.getItem('token')
-      if (!token) {
-        // Try to auto-login
-        try {
-          const healthCheck = await fetch('http://localhost:8000/health')
-          if (!healthCheck.ok) {
-            throw new Error('Backend not ready')
-          }
-          const result = await apiClient.login('test@example.com', 'test123')
-          if (result.access_token) {
-            token = result.access_token
-            setAuthenticated(true)
-          }
-        } catch (error: any) {
-          console.error('Auto-login failed:', error)
-          setLoadingTrialId(false)
-          return
-        }
-      } else {
-        // Verify token is valid
-        try {
-          const payload = JSON.parse(atob(token.split('.')[1]))
-          const exp = payload.exp * 1000
-          if (exp > Date.now()) {
-            setAuthenticated(true)
-          } else {
-            localStorage.removeItem('token')
-            const result = await apiClient.login('test@example.com', 'test123')
-            if (result.access_token) {
-              setAuthenticated(true)
-            }
-          }
-        } catch (e) {
-          // Invalid token, try to login
-          try {
-            const result = await apiClient.login('test@example.com', 'test123')
-            if (result.access_token) {
-              setAuthenticated(true)
-            }
-          } catch (error: any) {
-            console.error('Login failed:', error)
-          }
-        }
-      }
-
       // If we already have a trial ID from URL, use it
       if (trialIdParam) {
         setTrialId(trialIdParam)
@@ -444,6 +430,7 @@ export default function BlockchainPage() {
                       <div className="text-sm">
                         <span className="text-gray-400">Timestamp:</span>{' '}
                         <span className="text-white">{new Date(writeResult.timestamp).toLocaleString()}</span>
+                                              <span className="text-white">{formatDate(writeResult.timestamp)}</span>
                       </div>
                     </div>
                   </div>
@@ -551,6 +538,7 @@ export default function BlockchainPage() {
                             <div className="text-white">
                               <span className="text-white/70">Verified: </span>
                               {new Date(verifyResult.verification_timestamp).toLocaleString()}
+                                                          {formatDate(verifyResult.verification_timestamp)}
                             </div>
                           </div>
                         </div>
@@ -1036,6 +1024,34 @@ export default function BlockchainPage() {
           )}
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <Button
+              onClick={async () => {
+                try {
+                  const blob = await apiClient.downloadBlockchainSummary()
+                  const url = window.URL.createObjectURL(blob)
+                  const a = document.createElement('a')
+                  a.href = url
+                  a.download = 'blockchain_summary.pdf'
+                  document.body.appendChild(a)
+                  a.click()
+                  window.URL.revokeObjectURL(url)
+                  document.body.removeChild(a)
+                  toast({ title: 'Summary Downloaded', description: 'Blockchain summary PDF downloaded.' })
+                } catch (error: any) {
+                  toast({
+                    title: 'Download Failed',
+                    description: error.response?.data?.detail || 'Could not download blockchain summary',
+                    variant: 'destructive',
+                  })
+                }
+              }}
+              variant="outline"
+              size="lg"
+              className="border-2 border-green-500/50 text-green-400 hover:bg-green-950/30 hover:border-green-400 transition-all duration-300"
+            >
+              <File className="h-4 w-4 mr-2" />
+              Download Blockchain Summary
+            </Button>
             <Button
               onClick={() => router.push(`/regulator?trial_id=${trialId}`)}
               variant="outline"

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT00129597",
+  "title": "Effect of Ketalar to Prevent Postoperative Chronic Pain After Mastectomy",
+  "condition": "Pain",
+  "participant_count": 40,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 48.35,
+    "std": 15.139606742174392,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.48931770315876005,
+    "female": 0.5106822968412399
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 40,
+  "eligibility_score": 0.8365626857783033
+}

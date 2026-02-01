@@ -13,9 +13,28 @@ import bcrypt
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
+# SECURITY: SECRET_KEY must be set in environment - no default fallback
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError(
+        "CRITICAL SECURITY ERROR: SECRET_KEY not set in environment!\n"
+        "Set a strong SECRET_KEY (min 32 characters) in your .env file:\n"
+        "  SECRET_KEY=<your-strong-random-key-here>\n"
+        "  Generate with: python -c 'import secrets; print(secrets.token_urlsafe(32))'"
+    )
+
+if len(SECRET_KEY) < 32:
+    raise ValueError(
+        f"SECURITY ERROR: SECRET_KEY must be at least 32 characters. "
+        f"Current length: {len(SECRET_KEY)}"
+    )
+
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+
+# Validate token expiration
+if ACCESS_TOKEN_EXPIRE_MINUTES > 1440:  # Max 24 hours
+    raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES cannot exceed 1440 (24 hours)")
 
 # Use bcrypt directly to avoid passlib compatibility issues
 security = HTTPBearer()
@@ -95,52 +114,58 @@ def check_role(allowed_roles: list):
 
 # Role definitions for RBAC
 ROLES = {
-    "SPONSOR": "Pharmaceutical companies or organizations funding clinical trials",
-    "INVESTIGATOR": "Researchers conducting clinical trials",
-    "REGULATOR": "Regulatory authorities overseeing compliance (FDA, EMA, etc.)",
-    "ADMIN": "System administrators managing infrastructure",
-    "AUDITOR": "External auditors with read-only access"
+    "ADMIN": "System administrators with complete access to all trials, reports, and blockchain data. Can verify fairness and push approved trials to blockchain.",
+    "UPLOADER": "Users who can upload trials, run fairness tests, push only their own verified trials to blockchain, and view only the data they personally uploaded.",
+    "VALIDATOR": "Users with read-only access to view all trials and reports to verify integrity and detect tampering."
 }
 
 # Role-based permissions
-# Standard operations: upload, validate, ML check, blockchain write, sign, download reports
-STANDARD_OPERATIONS = ["SPONSOR", "INVESTIGATOR", "REGULATOR", "ADMIN"]
-# Read-only operations: verify blockchain, download reports, view data
-READ_ONLY_OPERATIONS = ["SPONSOR", "INVESTIGATOR", "REGULATOR", "ADMIN", "AUDITOR"]
-# Regulatory oversight: view audit logs, all trials
-REGULATORY_OPERATIONS = ["REGULATOR"]
-# Admin operations: manage nodes, users, retrain models
-ADMIN_OPERATIONS = ["REGULATOR", "ADMIN"]
-# Signing operations: investigators, regulators, sponsors can sign
-SIGNING_OPERATIONS = ["INVESTIGATOR", "REGULATOR", "SPONSOR"]
-# Write operations: cannot be done by auditors
-WRITE_OPERATIONS = ["SPONSOR", "INVESTIGATOR", "REGULATOR", "ADMIN"]
-
-def require_standard_access():
-    """Require standard user access (SPONSOR, INVESTIGATOR, REGULATOR, ADMIN)"""
-    return check_role(STANDARD_OPERATIONS)
-
-def require_read_access():
-    """Require read access (all roles including AUDITOR)"""
-    return check_role(READ_ONLY_OPERATIONS)
-
-def require_regulatory_access():
-    """Require regulatory access (REGULATOR only)"""
-    return check_role(REGULATORY_OPERATIONS)
+# Admin operations: complete access
+ADMIN_OPERATIONS = ["ADMIN"]
+# Uploader operations: upload, run ML tests, push own trials, view own data
+UPLOADER_OPERATIONS = ["ADMIN", "UPLOADER"]
+# Validator operations: read-only access to all trials and reports
+VALIDATOR_OPERATIONS = ["ADMIN", "UPLOADER", "VALIDATOR"]
+# Write operations: cannot be done by validators
+WRITE_OPERATIONS = ["ADMIN", "UPLOADER"]
+# Blockchain push operations: admin can push any, uploader only own
+BLOCKCHAIN_PUSH_OPERATIONS = ["ADMIN", "UPLOADER"]
+# Verify fairness operations: admin only
+VERIFY_FAIRNESS_OPERATIONS = ["ADMIN"]
 
 def require_admin_access():
-    """Require admin access (REGULATOR or ADMIN)"""
+    """Require admin access (ADMIN only)"""
     return check_role(ADMIN_OPERATIONS)
 
-def require_signing_access():
-    """Require signing access (INVESTIGATOR, REGULATOR, SPONSOR)"""
-    return check_role(SIGNING_OPERATIONS)
+def require_uploader_access():
+    """Require uploader access (ADMIN, UPLOADER)"""
+    return check_role(UPLOADER_OPERATIONS)
+
+def require_validator_access():
+    """Require validator access (ADMIN, UPLOADER, VALIDATOR)"""
+    return check_role(VALIDATOR_OPERATIONS)
 
 def require_write_access():
-    """Require write access (cannot be AUDITOR)"""
+    """Require write access (ADMIN, UPLOADER)"""
     return check_role(WRITE_OPERATIONS)
 
-def is_auditor(current_user: Dict = Depends(get_current_user)) -> bool:
-    """Check if current user is an auditor (read-only)"""
-    return current_user.get("role") == "AUDITOR"
+def require_blockchain_push_access():
+    """Require blockchain push access (ADMIN, UPLOADER)"""
+    return check_role(BLOCKCHAIN_PUSH_OPERATIONS)
+
+def require_verify_fairness_access():
+    """Require verify fairness access (ADMIN only)"""
+    return check_role(VERIFY_FAIRNESS_OPERATIONS)
+
+def is_validator(current_user: Dict = Depends(get_current_user)) -> bool:
+    """Check if current user is a validator (read-only)"""
+    return current_user.get("role") == "VALIDATOR"
+
+def is_uploader(current_user: Dict = Depends(get_current_user)) -> bool:
+    """Check if current user is an uploader"""
+    return current_user.get("role") == "UPLOADER"
+
+def is_admin(current_user: Dict = Depends(get_current_user)) -> bool:
+    """Check if current user is an admin"""
+    return current_user.get("role") == "ADMIN"
 

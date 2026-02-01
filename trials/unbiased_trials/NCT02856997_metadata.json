@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02856997",
+  "title": "Chidamide With ICE Regimen for Relapsed/Refractory Peripheral T Cell Lymphoma",
+  "condition": "Peripheral T Cell Lymphoma",
+  "participant_count": 35,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 45.91428571428571,
+    "std": 16.01538126223631,
+    "min": 18,
+    "max": 75
+  },
+  "gender_distribution": {
+    "male": 0.48955169431075574,
+    "female": 0.5104483056892443
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 35,
+  "eligibility_score": 0.8499630398143592
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT05447182",
+  "title": "People-Powered Medicine (PPM): Rheumatoid Arthritis Non-responders to Biologic Therapies (RANT)",
+  "condition": "Rheumatoid Arthritis",
+  "participant_count": 300,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 54.54666666666667,
+    "std": 18.90730306662126,
+    "min": 18,
+    "max": 95
+  },
+  "gender_distribution": {
+    "male": 0.46064638035876765,
+    "female": 0.5393536196412323
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 300,
+  "eligibility_score": 0.8255783242566889
+}

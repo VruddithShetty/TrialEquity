@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02889718",
+  "title": "Anesthesia Feasibility Study With the CONCERT-CL\u00ae Station",
+  "condition": "Cancer",
+  "participant_count": 60,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 48.266666666666666,
+    "std": 15.724176210985563,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5111434236739474,
+    "female": 0.4888565763260526
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 60,
+  "eligibility_score": 0.825368266162322
+}

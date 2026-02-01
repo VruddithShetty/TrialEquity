@@ -5,11 +5,25 @@ import hashlib
 import hmac
 from typing import Dict, Any
 import base64
+import os
 
 class TokenizationService:
     """Service for tokenizing trial IDs for pseudonymous auditing"""
     
-    def __init__(self, secret_key: str = "clinical-trials-tokenization-key"):
+    def __init__(self, secret_key: str = None):
+        # Get from environment or raise error
+        if not secret_key:
+            secret_key = os.getenv("TOKENIZATION_SECRET_KEY")
+            if not secret_key:
+                raise ValueError(
+                    "TOKENIZATION_SECRET_KEY must be set in environment for secure tokenization"
+                )
+        
+        if len(secret_key) < 32:
+            raise ValueError(
+                f"TOKENIZATION_SECRET_KEY must be at least 32 characters. "
+                f"Current length: {len(secret_key)}"
+            )
         self.secret_key = secret_key
     
     def generate_token(self, trial_id: str, user_id: str = None) -> str:

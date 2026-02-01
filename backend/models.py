@@ -16,7 +16,7 @@ class User(Document):
     email: EmailStr
     username: str
     hashed_password: str
-    role: str  # SPONSOR, INVESTIGATOR, REGULATOR, AUDITOR
+    role: str  # ADMIN, UPLOADER, VALIDATOR
     organization: Optional[str] = None
     is_active: bool = True
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -35,6 +35,7 @@ class Trial(Document):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     
     filename: str
+    file_path: Optional[str] = None  # Path to CSV file on disk
     uploaded_by: ObjectId  # Reference to User
     status: str = "uploaded"  # uploaded, validated, rejected, on_chain
     participant_count: Optional[int] = None

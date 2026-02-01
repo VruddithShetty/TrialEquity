@@ -1,0 +1,24 @@
+{
+  "trial_id": "TRIAL_AGE_BIAS_48565",
+  "participant_count": 200,
+  "bias_type": "age_skewed",
+  "age_distribution": {
+    "mean": 70.37239477991426,
+    "std": 7.91331418452571,
+    "min": 48.30007606521621,
+    "max": 90.0
+  },
+  "gender_distribution": {
+    "male": 0.575,
+    "female": 0.425
+  },
+  "ethnicity_distribution": {
+    "white": 0.755,
+    "black": 0.125,
+    "asian": 0.08,
+    "hispanic": 0.03,
+    "other": 0.01
+  },
+  "sample_size": 200,
+  "eligibility_score": 0.7455211379211675
+}

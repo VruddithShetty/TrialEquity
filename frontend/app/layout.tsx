@@ -4,12 +4,16 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { Navigation } from '@/components/Navigation'
 import { RealTimeAlerts } from '@/components/RealTimeAlerts'
+import { ClientLayout } from './ClientLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'TrialEquity Platform | AI-Enhanced Clinical Trial Management',
   description: 'Premium AI-Enhanced Blockchain Platform for Secure, Fair, and Regulatory-Compliant Clinical Trial Data Management',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -20,10 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navigation />
-        <RealTimeAlerts />
-        {children}
-        <Toaster />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   )

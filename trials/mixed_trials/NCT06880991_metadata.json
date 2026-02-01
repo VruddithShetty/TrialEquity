@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06880991",
+  "title": "Development of Patient-Reported Outcome Measures Assessing Tumor Visibility and Appearance Concerns in Neurofibromatosis Type 1: A Qualitative Study",
+  "condition": "Neurofibromatosis Type 1",
+  "participant_count": 110,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 60.663636363636364,
+    "std": 26.753813848924153,
+    "min": 5,
+    "max": 120
+  },
+  "gender_distribution": {
+    "male": 0.5482378616908606,
+    "female": 0.45176213830913936
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 110,
+  "eligibility_score": 0.8321774533508508
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT00021060",
+  "title": "Combination Chemotherapy With or Without Bevacizumab in Treating Patients With Advanced, Metastatic, or Recurrent Non-Small Cell Lung Cancer",
+  "condition": "Adenocarcinoma of the Lung",
+  "participant_count": 842,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 48.611638954869356,
+    "std": 14.858348439749495,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.4556514624388062,
+    "female": 0.5443485375611938
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 842,
+  "eligibility_score": 0.825237312308537
+}

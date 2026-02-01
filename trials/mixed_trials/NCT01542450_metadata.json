@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT01542450",
+  "title": "Pharmacokinetics of Insulin Detemir in Subjects With Type 1 Diabetes",
+  "condition": "Diabetes",
+  "participant_count": 23,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 50.73913043478261,
+    "std": 15.282840619181512,
+    "min": 20,
+    "max": 78
+  },
+  "gender_distribution": {
+    "male": 0.5250871067791498,
+    "female": 0.4749128932208502
+  },
+  "ethnicity_distribution": {
+    "white": 0.1,
+    "black": 0.05,
+    "asian": 0.75,
+    "hispanic": 0.05,
+    "other": 0.05
+  },
+  "sample_size": 23,
+  "eligibility_score": 0.8325277470913724
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT03995082",
+  "title": "Breast Cancer Patient Engagement With Patient Reported Outcome Measure Survey",
+  "condition": "Breast Cancer",
+  "participant_count": 925,
+  "bias_type": "biased",
+  "age_distribution": {
+    "mean": 48.55783783783784,
+    "std": 15.151120273314628,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.17794489022213245,
+    "female": 0.8220551097778676
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 925,
+  "eligibility_score": 0.8226971605085733
+}

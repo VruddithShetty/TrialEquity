@@ -1,13 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Shield, FileText, AlertTriangle, CheckCircle, Download } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { apiClient } from '@/lib/api'
 import { useToast } from '@/hooks/use-toast'
+import { formatDate } from '@/lib/date-utils'
 
 interface AuditLog {
   log_id: string
@@ -20,80 +21,44 @@ interface AuditLog {
 
 export default function RegulatorDashboard() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const trialId = searchParams.get('trial_id')
   const [logs, setLogs] = useState<AuditLog[]>([])
   const [loading, setLoading] = useState(false)
   const [authenticated, setAuthenticated] = useState(false)
   const { toast } = useToast()
 
-  // Auto-login with test user on mount
+  // Check authentication on mount
   useEffect(() => {
-    const autoLogin = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        // Verify token is still valid by checking if it's expired
-        try {
-          const payload = JSON.parse(atob(token.split('.')[1]))
-          const exp = payload.exp * 1000 // Convert to milliseconds
-          if (exp > Date.now()) {
-            setAuthenticated(true)
-            console.log('✅ Using existing valid token')
-            return
-          } else {
-            // Token expired, remove it
-            localStorage.removeItem('token')
-            console.log('⚠️ Token expired, will re-login')
-          }
-        } catch (e) {
-          // Invalid token format, remove it
-          localStorage.removeItem('token')
-          console.log('⚠️ Invalid token format, will re-login')
-        }
-      }
-
-      // Wait a bit for backend to be ready, then retry
-      const tryLogin = async (retries = 5) => {
-        for (let i = 0; i < retries; i++) {
-          try {
-            // Check if backend is ready first
-            const healthCheck = await fetch('http://localhost:8000/health')
-            if (!healthCheck.ok) {
-              throw new Error('Backend not ready')
-            }
-            
-            // Backend is ready, try login with REGULATOR credentials
-            const result = await apiClient.login('regulator@example.com', 'test123')
-            if (result.access_token) {
-              setAuthenticated(true)
-              console.log('✅ Auto-login successful as REGULATOR')
-              return
-            } else {
-              throw new Error('Login did not return access token')
-            }
-          } catch (error: any) {
-            console.log(`Login attempt ${i + 1} failed:`, error.message)
-            if (i < retries - 1) {
-              // Wait 2 seconds before retry
-              await new Promise(resolve => setTimeout(resolve, 2000))
-            } else {
-              console.error('Auto-login failed after retries:', error)
-              toast({
-                title: 'Backend Not Ready',
-                description: 'Waiting for backend to start. Please refresh the page in a moment.',
-                variant: 'destructive',
-              })
-            }
-          }
-        }
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
+    if (!token || !user) {
+      router.push('/login')
+      return
+    }
+    
+    try {
+      const userData = JSON.parse(user)
+      // Regulator page is available to all authenticated users (they can view audit logs)
+      // Verify token is still valid
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      const exp = payload.exp * 1000
+      if (exp < Date.now()) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        router.push('/login')
+        return
       }
       
-      // Wait 2 seconds before first attempt (give backend time to start)
-      setTimeout(() => {
-        tryLogin()
-      }, 2000)
+      setAuthenticated(true)
+      fetchAuditLogs()
+    } catch (e) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      router.push('/login')
     }
-    autoLogin()
-  }, [toast])
+  }, [router])
 
   useEffect(() => {
     if (authenticated) {
@@ -103,17 +68,13 @@ export default function RegulatorDashboard() {
 
   const fetchAuditLogs = async () => {
     if (!authenticated) {
-      // Wait for authentication
-      const token = localStorage.getItem('token')
-      if (!token) {
-        toast({
-          title: 'Authentication Required',
-          description: 'Please wait for auto-login to complete or refresh the page.',
-          variant: 'destructive',
-        })
-        return
-      }
-      setAuthenticated(true)
+      toast({
+        title: 'Authentication Required',
+        description: 'Please login first.',
+        variant: 'destructive',
+      })
+      router.push('/login')
+      return
     }
 
     setLoading(true)
@@ -124,34 +85,11 @@ export default function RegulatorDashboard() {
       console.error('Failed to fetch audit logs:', error)
       const errorMessage = error.response?.data?.detail || error.message || 'Access denied'
       
-      // Check if it's a 403 permission error - try to re-login with REGULATOR credentials
-      if (error.response?.status === 403) {
-        try {
-          const result = await apiClient.login('regulator@example.com', 'test123')
-          if (result.access_token) {
-            setAuthenticated(true)
-            // Retry fetching logs after a short delay
-            setTimeout(() => {
-              fetchAuditLogs()
-            }, 500)
-            return
-          }
-        } catch (loginError: any) {
-          console.error('Re-login failed:', loginError)
-        }
-        toast({
-          title: 'Access Restricted',
-          description: 'This page requires REGULATOR role. Please ensure you are logged in with regulator@example.com',
-          variant: 'destructive',
-        })
-        setLogs([])
-      } else {
-        toast({
-          title: 'Failed to fetch logs',
-          description: errorMessage,
-          variant: 'destructive',
-        })
-      }
+      toast({
+        title: 'Failed to fetch logs',
+        description: errorMessage,
+        variant: 'destructive',
+      })
       
       // Set empty logs so UI doesn't break
       setLogs([])
@@ -166,18 +104,13 @@ export default function RegulatorDashboard() {
     // Check if we have a token
     const token = localStorage.getItem('token')
     if (!token || !authenticated) {
-      // Try to login first
-      try {
-        await apiClient.login('test@example.com', 'test123')
-        setAuthenticated(true)
-      } catch (error: any) {
-        toast({
-          title: 'Authentication Required',
-          description: 'Please wait for auto-login to complete or refresh the page.',
-          variant: 'destructive',
-        })
-        return
-      }
+      toast({
+        title: 'Authentication Required',
+        description: 'Please login first.',
+        variant: 'destructive',
+      })
+      router.push('/login')
+      return
     }
 
     try {
@@ -326,6 +259,7 @@ export default function RegulatorDashboard() {
                             </p>
                             <p className="text-sm text-white-400 whitespace-nowrap">
                               {new Date(log.timestamp).toLocaleString()}
+                                                          {formatDate(log.timestamp)}
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-4 text-sm mb-2">

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT00441818",
+  "title": "Safety and Efficacy Study of TNX-650 to Treat Refractory Hodgkin's Lymphoma",
+  "condition": "Hodgkin's Lymphoma",
+  "participant_count": 59,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 50.0,
+    "std": 14.570873166272028,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.49626229567393165,
+    "female": 0.5037377043260683
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 59,
+  "eligibility_score": 0.823622987870932
+}

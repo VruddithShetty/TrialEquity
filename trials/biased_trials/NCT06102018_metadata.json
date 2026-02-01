@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06102018",
+  "title": "Diagnostic Biomarkers Exploration of Breast Cancer From Serum and Urine",
+  "condition": "Breast Neoplasm Female",
+  "participant_count": 150,
+  "bias_type": "biased",
+  "age_distribution": {
+    "mean": 43.29333333333334,
+    "std": 12.253226758512458,
+    "min": 18,
+    "max": 70
+  },
+  "gender_distribution": {
+    "male": 0.1564804468683647,
+    "female": 0.8435195531316353
+  },
+  "ethnicity_distribution": {
+    "white": 0.1,
+    "black": 0.05,
+    "asian": 0.75,
+    "hispanic": 0.05,
+    "other": 0.05
+  },
+  "sample_size": 150,
+  "eligibility_score": 0.8333099339201491
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02295020",
+  "title": "Effect of Bioskin Ten-7 vs. Standard Treatment on Patient Reported Outcomes and Cytokine.",
+  "condition": "Osteoarthritis of the Knee",
+  "participant_count": 40,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 48.425,
+    "std": 13.765224671483217,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5308604252173835,
+    "female": 0.4691395747826165
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 40,
+  "eligibility_score": 0.8256194788723434
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT00085397",
+  "title": "Vaccine Therapy in Treating Patients With Stage III or Stage IV Melanoma",
+  "condition": "Melanoma (Skin)",
+  "participant_count": 40,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 49.575,
+    "std": 15.031398761191477,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5143161451163342,
+    "female": 0.48568385488366583
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 40,
+  "eligibility_score": 0.8289068570100675
+}

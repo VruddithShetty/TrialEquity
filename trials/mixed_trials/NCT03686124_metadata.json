@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT03686124",
+  "title": "ACTengine\u00ae IMA203/IMA203CD8 as Monotherapy or in Combination With Nivolumab in Recurrent and/or Refractory Solid Tumors",
+  "condition": "Refractory Cancer",
+  "participant_count": 375,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 48.19466666666667,
+    "std": 15.565523858091867,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5301852408390604,
+    "female": 0.4698147591609396
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 375,
+  "eligibility_score": 0.8240050685028157
+}

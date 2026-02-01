@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02147990",
+  "title": "Multicenter Study of Rociletinib Administered to Patients With Previously Treated Mutant EGFR Non-small Cell Lung Cancer",
+  "condition": "Non-small Cell Lung Cancer",
+  "participant_count": 318,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 48.210691823899374,
+    "std": 14.766412955431765,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5244186107231593,
+    "female": 0.4755813892768407
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 318,
+  "eligibility_score": 0.8297911875568502
+}

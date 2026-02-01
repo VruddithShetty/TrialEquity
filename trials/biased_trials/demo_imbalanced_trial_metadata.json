@@ -1,0 +1,24 @@
+{
+  "trial_id": "TRIAL_DEMO_BIAS_35032",
+  "participant_count": 200,
+  "bias_type": "demographic_imbalanced",
+  "age_distribution": {
+    "mean": 55.609102677414,
+    "std": 13.930943444073858,
+    "min": 18.0,
+    "max": 90.0
+  },
+  "gender_distribution": {
+    "male": 0.85,
+    "female": 0.15
+  },
+  "ethnicity_distribution": {
+    "white": 0.915,
+    "black": 0.035,
+    "asian": 0.025,
+    "hispanic": 0.015,
+    "other": 0.01
+  },
+  "sample_size": 200,
+  "eligibility_score": 0.6483574984732937
+}

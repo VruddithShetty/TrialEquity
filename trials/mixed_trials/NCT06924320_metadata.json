@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06924320",
+  "title": "A Study of MET233 in Combination With MET097 in Individuals With Obesity or Overweight With or Without Diabetes",
+  "condition": "Obesity and Obesity-related Medical Conditions",
+  "participant_count": 132,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 47.234848484848484,
+    "std": 13.915700314538377,
+    "min": 18,
+    "max": 75
+  },
+  "gender_distribution": {
+    "male": 0.4850716717492166,
+    "female": 0.5149283282507834
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 132,
+  "eligibility_score": 0.8218797482707009
+}

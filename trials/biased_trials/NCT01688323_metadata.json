@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT01688323",
+  "title": "Finding Predictors of Side Effects to Chemoradiation Treatment in Elderly Patients With Head and Neck Cancer",
+  "condition": "Head and Neck Cancer",
+  "participant_count": 50,
+  "bias_type": "biased",
+  "age_distribution": {
+    "mean": 71.48,
+    "std": 4.00632153538604,
+    "min": 65,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.4747705887990758,
+    "female": 0.5252294112009241
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 50,
+  "eligibility_score": 0.8245622338560207
+}

@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06926920",
+  "title": "A Study of Sacituzumab Govitecan Given at an Alternative Dose and Schedule in Participants With Advanced Triple-Negative Breast Cancer",
+  "condition": "Triple Negative Breast Cancer",
+  "participant_count": 100,
+  "bias_type": "biased",
+  "age_distribution": {
+    "mean": 48.43,
+    "std": 14.776622951763565,
+    "min": 19,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.25238256359108546,
+    "female": 0.7476174364089145
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 100,
+  "eligibility_score": 0.821849900518714
+}

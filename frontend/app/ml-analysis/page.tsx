@@ -35,74 +35,36 @@ export default function MLAnalysisPage() {
   const [authenticated, setAuthenticated] = useState(false)
   const { toast } = useToast()
 
-  // Auto-login with test user on mount
+  // Check authentication on mount
   useEffect(() => {
-    const autoLogin = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        // Verify token is still valid by checking if it's expired
-        try {
-          const payload = JSON.parse(atob(token.split('.')[1]))
-          const exp = payload.exp * 1000 // Convert to milliseconds
-          if (exp > Date.now()) {
-            setAuthenticated(true)
-            console.log('✅ Using existing valid token')
-            return
-          } else {
-            // Token expired, remove it
-            localStorage.removeItem('token')
-            console.log('⚠️ Token expired, will re-login')
-          }
-        } catch (e) {
-          // Invalid token format, remove it
-          localStorage.removeItem('token')
-          console.log('⚠️ Invalid token format, will re-login')
-        }
-      }
-
-      // Wait a bit for backend to be ready, then retry
-      const tryLogin = async (retries = 5) => {
-        for (let i = 0; i < retries; i++) {
-          try {
-            // Check if backend is ready first
-            const healthCheck = await fetch('http://localhost:8000/health')
-            if (!healthCheck.ok) {
-              throw new Error('Backend not ready')
-            }
-            
-            // Backend is ready, try login
-            const result = await apiClient.login('test@example.com', 'test123')
-            if (result.access_token) {
-              setAuthenticated(true)
-              console.log('✅ Auto-login successful')
-              return
-            } else {
-              throw new Error('Login did not return access token')
-            }
-          } catch (error: any) {
-            console.log(`Login attempt ${i + 1} failed:`, error.message)
-            if (i < retries - 1) {
-              // Wait 2 seconds before retry
-              await new Promise(resolve => setTimeout(resolve, 2000))
-            } else {
-              console.error('Auto-login failed after retries:', error)
-              toast({
-                title: 'Backend Not Ready',
-                description: 'Waiting for backend to start. Please refresh the page in a moment.',
-                variant: 'destructive',
-              })
-            }
-          }
-        }
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    
+    if (!token || !user) {
+      router.push('/login')
+      return
+    }
+    
+    try {
+      const userData = JSON.parse(user)
+      // ML analysis is available to all authenticated users
+      // Verify token is still valid
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      const exp = payload.exp * 1000
+      if (exp < Date.now()) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        router.push('/login')
+        return
       }
       
-      // Wait 2 seconds before first attempt (give backend time to start)
-      setTimeout(() => {
-        tryLogin()
-      }, 2000)
+      setAuthenticated(true)
+    } catch (e) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      router.push('/login')
     }
-    autoLogin()
-  }, [toast])
+  }, [router])
 
   useEffect(() => {
     if (trialId && authenticated) {
@@ -117,18 +79,13 @@ export default function MLAnalysisPage() {
     // Check if we have a token
     const token = localStorage.getItem('token')
     if (!token || !authenticated) {
-      // Try to login first
-      try {
-        await apiClient.login('test@example.com', 'test123')
-        setAuthenticated(true)
-      } catch (error: any) {
-        toast({
-          title: 'Authentication Required',
-          description: 'Please wait for auto-login to complete or refresh the page.',
-          variant: 'destructive',
-        })
-        return
-      }
+      toast({
+        title: 'Authentication Required',
+        description: 'Please login first.',
+        variant: 'destructive',
+      })
+      router.push('/login')
+      return
     }
 
     setLoading(true)
@@ -509,6 +466,27 @@ export default function MLAnalysisPage() {
                     Write to Blockchain
                   </Button>
                 )}
+                <Button
+                  onClick={async () => {
+                    try {
+                      const blob = await apiClient.downloadReport(trialId)
+                      const url = window.URL.createObjectURL(blob)
+                      const a = document.createElement('a')
+                      a.href = url
+                      a.download = `trial_report_${trialId}.pdf`
+                      document.body.appendChild(a)
+                      a.click()
+                      window.URL.revokeObjectURL(url)
+                      document.body.removeChild(a)
+                    } catch (error: any) {
+                      console.error('Download failed:', error)
+                    }
+                  }}
+                  variant="outline"
+                  size="lg"
+                >
+                  Download Report
+                </Button>
                 <Button
                   onClick={() => router.push(`/regulator?trial_id=${trialId}`)}
                   variant="outline"

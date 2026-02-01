@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02946918",
+  "title": "Levothyroxine Replacement With Liquid Gel Capsules vs Tablets Post-thyroidectomy",
+  "condition": "Thyroid Cancer",
+  "participant_count": 50,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 49.82,
+    "std": 13.026957920138578,
+    "min": 18,
+    "max": 72
+  },
+  "gender_distribution": {
+    "male": 0.4581046215907648,
+    "female": 0.5418953784092352
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 50,
+  "eligibility_score": 0.8247809826185817
+}

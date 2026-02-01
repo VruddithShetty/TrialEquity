@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06710223",
+  "title": "Cryoablation and Arterial Infusion of SD-101 in Combination with Durvalumab and Tremelimumab",
+  "condition": "Hepatocellular Carcinoma",
+  "participant_count": 20,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 49.45,
+    "std": 12.750541784154652,
+    "min": 25,
+    "max": 76
+  },
+  "gender_distribution": {
+    "male": 0.4853906624010231,
+    "female": 0.5146093375989769
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 20,
+  "eligibility_score": 0.8130536651632138
+}

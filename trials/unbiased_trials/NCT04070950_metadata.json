@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT04070950",
+  "title": "Sexuality of Women With Pelvic Cancer",
+  "condition": "Sexual Behavior",
+  "participant_count": 40,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 51.425,
+    "std": 14.542400429654323,
+    "min": 18,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.5474394807666167,
+    "female": 0.45256051923338325
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 40,
+  "eligibility_score": 0.8006478710609459
+}

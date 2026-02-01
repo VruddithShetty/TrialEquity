@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT05477823",
+  "title": "Imaging and Genomic Biomarkers to Predict Response in Prostate Cancer",
+  "condition": "Prostate Cancer",
+  "participant_count": 30,
+  "bias_type": "biased",
+  "age_distribution": {
+    "mean": 53.5,
+    "std": 13.910427743243556,
+    "min": 21,
+    "max": 79
+  },
+  "gender_distribution": {
+    "male": 0.7986011812011132,
+    "female": 0.20139881879888677
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 30,
+  "eligibility_score": 0.8368968758439689
+}

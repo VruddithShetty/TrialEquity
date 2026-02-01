@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT02926391",
+  "title": "UNiD 3D VBR Register",
+  "condition": "Spinal Cord Compression",
+  "participant_count": 50,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 50.58,
+    "std": 13.717395480757641,
+    "min": 24,
+    "max": 80
+  },
+  "gender_distribution": {
+    "male": 0.4613473521240589,
+    "female": 0.538652647875941
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 50,
+  "eligibility_score": 0.8287784661364761
+}

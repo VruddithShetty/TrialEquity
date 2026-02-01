@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT06821620",
+  "title": "Interaction of MTNR1B Genotype and Type of Breakfast (Protein-enriched v Carbohydrate-rich) on Postprandial Glucose Response.",
+  "condition": "Glucose Metabolism Disorders",
+  "participant_count": 60,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 33.333333333333336,
+    "std": 6.883206452914683,
+    "min": 18,
+    "max": 48
+  },
+  "gender_distribution": {
+    "male": 0.5143863235010431,
+    "female": 0.4856136764989569
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.2,
+    "asian": 0.15,
+    "hispanic": 0.1,
+    "other": 0.05
+  },
+  "sample_size": 60,
+  "eligibility_score": 0.8252865373444416
+}

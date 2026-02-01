@@ -1,0 +1,26 @@
+{
+  "trial_id": "NCT04831190",
+  "title": "A Tailored Exercise Oncology Program for Neuro-Oncology Patients",
+  "condition": "Cancer",
+  "participant_count": 70,
+  "bias_type": "mixed",
+  "age_distribution": {
+    "mean": 57.6,
+    "std": 19.280086595511825,
+    "min": 18,
+    "max": 100
+  },
+  "gender_distribution": {
+    "male": 0.5288977187852294,
+    "female": 0.4711022812147706
+  },
+  "ethnicity_distribution": {
+    "white": 0.7,
+    "black": 0.15,
+    "asian": 0.1,
+    "hispanic": 0.04,
+    "other": 0.01
+  },
+  "sample_size": 70,
+  "eligibility_score": 0.8254472756580562
+}

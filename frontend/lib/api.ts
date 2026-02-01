@@ -9,10 +9,13 @@ const api = axios.create({
   },
 })
 
-// Add auth token to requests
+// Add auth token to requests (skip for login/registration endpoints)
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
-  if (token) {
+  // Only add token if it exists AND we're not logging in
+  const isLoginRequest = config.url?.includes('/api/login') || config.url?.includes('/api/register')
+  
+  if (token && !isLoginRequest) {
     // Ensure Authorization header is always set, even for multipart requests
     if (!config.headers) {
       config.headers = {} as any
@@ -20,12 +23,13 @@ api.interceptors.request.use((config) => {
     if (typeof config.headers === 'object' && !Array.isArray(config.headers)) {
       config.headers.Authorization = `Bearer ${token}`
     }
-    
-    // For FormData, don't set Content-Type (let browser set it with boundary)
-    if (config.data instanceof FormData) {
-      delete config.headers['Content-Type']
-    }
   }
+  
+  // For FormData, don't set Content-Type (let browser set it with boundary)
+  if (config.data instanceof FormData && config.headers) {
+    delete config.headers['Content-Type']
+  }
+  
   return config
 })
 
@@ -124,7 +128,7 @@ export const apiClient = {
   },
 
   getAuditLogs: async (trialId?: string) => {
-    const response = await api.get('/api/regulator/audit/logs', {
+    const response = await api.get('/api/admin/audit/logs', {
       params: { trial_id: trialId },
     })
     return response.data
@@ -145,22 +149,21 @@ export const apiClient = {
     return response.data
   },
 
+  downloadBlockchainSummary: async () => {
+    const response = await api.get('/api/blockchain/summary-report', {
+      responseType: 'blob',
+    })
+    return response.data
+  },
+
   compareBlockchains: async () => {
     const response = await api.get('/api/blockchain/compare')
     return response.data
   },
 
   getAllTrials: async () => {
-    // Try regulator endpoint first (requires REGULATOR role)
-    try {
-      const response = await api.get('/api/regulator/trials')
-      return response.data
-    } catch (error: any) {
-      // If regulator endpoint fails, we'll need another approach
-      // For now, return empty array - we can add a general endpoint later
-      console.warn('Could not fetch trials from regulator endpoint:', error.message)
-      return []
-    }
+    const response = await api.get('/api/trials')
+    return response.data
   },
 
   getLatestTrial: async () => {
@@ -179,11 +182,9 @@ export const apiClient = {
   },
 
   login: async (email: string, password: string) => {
-    const formData = new URLSearchParams()
-    formData.append('email', email)
-    formData.append('password', password)
-    const response = await api.post('/api/login', formData, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    const response = await api.post('/api/login', {
+      email,
+      password
     })
     if (response.data.access_token) {
       localStorage.setItem('token', response.data.access_token)
@@ -191,14 +192,24 @@ export const apiClient = {
     return response.data
   },
 
-  register: async (userData: {
+  logout: async () => {
+    try {
+      // Clear local storage
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    } catch (_) {
+      // noop
+    }
+  },
+
+  createUser: async (userData: {
     email: string
     username: string
     password: string
     role: string
     organization?: string
   }) => {
-    const response = await api.post('/api/register', userData)
+    const response = await api.post('/api/admin/users', userData)
     return response.data
   },
 
@@ -269,6 +280,18 @@ export const apiClient = {
     const response = await api.post('/api/alerts/tamper', null, {
       params: { trial_id: trialId },
     })
+    return response.data
+  },
+
+  // Delete Trial
+  deleteTrial: async (trialId: string) => {
+    const response = await api.delete(`/api/trials/${trialId}`)
+    return response.data
+  },
+
+  // Get CSV data for trial
+  getTrialCsvData: async (trialId: string) => {
+    const response = await api.get(`/api/trials/${trialId}/csv`)
     return response.data
   },
 }

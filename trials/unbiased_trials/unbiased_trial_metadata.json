@@ -1,0 +1,24 @@
+{
+  "trial_id": "TRIAL_25795",
+  "participant_count": 200,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 55.66004505304601,
+    "std": 14.097539839058024,
+    "min": 18.0,
+    "max": 90.0
+  },
+  "gender_distribution": {
+    "male": 0.48,
+    "female": 0.52
+  },
+  "ethnicity_distribution": {
+    "white": 0.41,
+    "black": 0.205,
+    "asian": 0.17,
+    "hispanic": 0.145,
+    "other": 0.07
+  },
+  "sample_size": 200,
+  "eligibility_score": 0.873922809693521
+}

@@ -54,10 +54,7 @@ services:
       NEXT_PUBLIC_API_URL: http://localhost:8000
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+    # Use built image contents; do not mount source in production
 
   ipfs:
     image: ipfs/kubo:latest

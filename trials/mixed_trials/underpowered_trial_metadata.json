@@ -1,0 +1,24 @@
+{
+  "trial_id": "TRIAL_UNDERPOWERED_27622",
+  "participant_count": 20,
+  "bias_type": "unbiased",
+  "age_distribution": {
+    "mean": 54.614403331146306,
+    "std": 14.28913159822188,
+    "min": 30.206219532416743,
+    "max": 87.81233244061309
+  },
+  "gender_distribution": {
+    "male": 0.5,
+    "female": 0.5
+  },
+  "ethnicity_distribution": {
+    "white": 0.5,
+    "black": 0.1,
+    "asian": 0.15,
+    "hispanic": 0.2,
+    "other": 0.05
+  },
+  "sample_size": 20,
+  "eligibility_score": 0.8847865111789229
+}

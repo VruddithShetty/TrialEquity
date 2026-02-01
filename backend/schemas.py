@@ -78,3 +78,7 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
+class LoginRequest(BaseModel):
+    """Login request schema"""
+    email: EmailStr
+    password: str
