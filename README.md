@@ -397,6 +397,10 @@ docker-compose -f docker-compose.prod.yml down
 
 ### Testing Services
 
+Default admin login:
+- Email: `user@example.com`
+- Password: `password123`
+
 ```bash
 # Test backend API
 curl http://localhost:8000/health
@@ -404,7 +408,7 @@ curl http://localhost:8000/health
 # Test authentication
 curl -X POST http://localhost:8000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@example.com","password":"password"}'
+  -d '{"email":"user@example.com","password":"password123"}'
 
 # Test frontend
 open http://localhost:3000  # macOS
